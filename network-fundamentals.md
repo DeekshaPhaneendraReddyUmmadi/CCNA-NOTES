@@ -1,7 +1,3 @@
-Here is the updated guide. I have taken the new information you added, simplified the technical terms so they match the easy-to-understand tone of the rest of the document, and restored the missing **ICMP** section at the bottom. I also updated the **Index** so every link works perfectly!
-
-***
-
 # Network Fundamentals: A Simple Guide
 
 ### Index

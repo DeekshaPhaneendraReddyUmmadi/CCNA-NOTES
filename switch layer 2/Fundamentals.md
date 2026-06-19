@@ -1,7 +1,3 @@
-Here is the information on Switching Fundamentals, simplified so it is easy for anyone to understand, with fixed numbering, combined examples, and a complete, working index at the top!
-
-***
-
 # Switching Fundamentals: A Simple Guide
 
 ### Index
