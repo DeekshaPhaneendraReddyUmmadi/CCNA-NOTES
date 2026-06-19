@@ -11,7 +11,7 @@
 * [What is Duplex? (How Data Travels)](#what-is-duplex-how-data-travels)
 * [Communication Models](#communication-models)
 * [Network Architecture Models](#network-architecture-models)
-* [What is ICMP?](#what-is-icmp)
+* [Types of Cables](#types-of-cables)
 
 ---
 
@@ -142,3 +142,71 @@ This is how devices are organized to share resources.
 * **B. Peer-to-Peer / P2P Model (Everyone is Equal):** All devices are equal. Every computer can ask for files AND share files directly with others, without needing a central "boss" server.
 
 ---
+
+### Types of Cables
+Networking cables are the physical wires that connect devices so they can share information. Twisted pair cables (like standard Ethernet) are the everyday, affordable choice for connecting computers in homes and offices. Fiber optic cables use flashes of light to send massive amounts of data at super-fast speeds over very long distances. Coaxial cables are tough, heavily shielded wires traditionally used for cable TV and home broadband internet.
+
+#### **1. Twisted Pair Cables (Copper)**
+*   **What it is:** Small copper wires twisted together in pairs. Twisting them helps stop electrical noise from messing up the data.
+*   **Why use it:** It is cheap, bends easily, and is very easy to set up.
+*   **Where it is used:** Everyday local networks (LANs).
+*   **Main Styles:**
+    *   **UTP (Unshielded):** Standard cable with no extra armor.
+    *   **STP (Shielded):** Has extra metal foil inside to block heavy electrical noise (used in loud factories).
+
+**Specific Types (Categories):**
+Higher numbers mean faster speeds and better protection against noise.
+*   **Cat5e:** 
+    *   **Speed:** 1 Gigabit per second (Gbps). 
+    *   **Distance:** Up to 100 meters. 
+    *   **Example:** Basic home internet and older office networks.
+*   **Cat6:** 
+    *   **Speed:** 1 Gbps (can do 10 Gbps for very short distances). 
+    *   **Distance:** Up to 100 meters. 
+    *   **Example:** The standard cable for modern homes and gaming setups.
+*   **Cat6a (Advanced):** 
+    *   **Speed:** 10 Gbps. 
+    *   **Distance:** Up to 100 meters. 
+    *   **Example:** Fast office networks and servers.
+*   **Cat7 & Cat8:** 
+    *   **Speed:** 25 to 40 Gbps. 
+    *   **Distance:** Short distances (up to 30 meters). 
+    *   **Example:** Used inside large data centers where super-fast speed is needed over a short space.
+
+---
+
+#### **2. Fiber Optic Cables (Light)**
+*   **What it is:** Extremely thin strands of glass or plastic. Instead of electricity, they send data using fast flashes of light.
+*   **Why use it:** It is incredibly fast, very secure, and can travel miles without losing the signal.
+*   **Where it is used:** Core internet backbones, connecting cities, and large data centers.
+
+**Specific Types:**
+Fiber cables are grouped by how the light travels inside them.
+*   **Multi-mode (OM1, OM2, OM3, OM4, OM5):** 
+    *   **What it is:** A thicker core for sending lots of light signals at once.
+    *   **Speed:** 1 Gbps up to 100 Gbps. 
+    *   **Distance:** Short to medium (up to 400 meters). 
+    *   **Example:** Connecting different server rooms inside the same large building or hospital.
+*   **Single-mode (OS1, OS2):** 
+    *   **What it is:** A very thin core for sending a single light beam.
+    *   **Speed:** 10 Gbps to over 100 Gbps. 
+    *   **Distance:** Extremely long (up to 200 kilometers or more). 
+    *   **Example:** Connecting internet from one city to another, or underground cables provided by your internet company.
+
+---
+
+#### **3. Coaxial Cables (Copper)**
+*   **What it is:** A single, thick copper wire in the center, surrounded by a thick plastic layer and a metal shield.
+*   **Why use it:** It is very tough, lasts a long time, and the thick shield blocks outside noise very well.
+*   **Where it is used:** Mostly for television and older broadband internet connections.
+
+**Specific Types:**
+Coaxial cables are graded by "RG" (Radio Guide) numbers.
+*   **RG-59:** 
+    *   **Speed/Quality:** Lower bandwidth. 
+    *   **Distance:** Short distances. 
+    *   **Example:** Older security cameras (CCTV) and old analog TVs.
+*   **RG-6:** 
+    *   **Speed/Quality:** High bandwidth (can handle up to 1 Gbps for internet). 
+    *   **Distance:** Longer distances without losing the signal. 
+    *   **Example:** Modern cable TV and the wire that connects the internet from the street to your home modem.  

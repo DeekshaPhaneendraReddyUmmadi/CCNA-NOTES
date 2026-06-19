@@ -6,9 +6,9 @@
 * [Why do we need a Switch?](#why-do-we-need-a-switch)
 * [How Does a Switch Work? (MAC Addresses)](#how-does-a-switch-work-mac-addresses)
 * [The Three Basic Rules of a Switch](#the-three-basic-rules-of-a-switch)
+* [Switching Methods (How it Forwards Data)](#switching-methods-how-it-forwards-data)
 * [VLANs (Virtual Segmentation)](#vlans-virtual-segmentation)
 * [Spanning Tree Protocol (STP)](#spanning-tree-protocol-stp)
-* [Switching Methods (How it Forwards Data)](#switching-methods-how-it-forwards-data)
 * [Simple Examples to Remember](#simple-examples-to-remember)
 * [Quick Questions for You](#quick-questions-for-you)
 
@@ -28,7 +28,7 @@ Without a switch, computers would just shout their messages to everyone on the n
 ### How Does a Switch Work? (MAC Addresses)
 To send messages to the right place, the switch needs to know who is who. 
 * **The Fingerprint (MAC Address):** Every computer has a permanent, unique physical name tag built right into its network card. This is called a **MAC (Media Access Control) address**. It is 48-bits long and looks like a mix of letters and numbers (e.g., `00:1A:2B:3C:4D:5E`).
-* **The Notebook (CAM Table):** The switch keeps an internal list (called a MAC Address Table or CAM Table) where it records which computer (MAC address) is plugged into which physical port (cable hole).
+* **The Notebook (CAM Table):** The switch keeps an internal list (called a MAC Address Table or CAM(Content Addressable Memory) Table) where it records which computer (MAC address) is plugged into which physical port (cable hole).
 * **The Delivery:** When a computer sends a message, the switch reads the MAC address on the envelope and sends it *only* to the correct computer.
 
 ---
@@ -39,6 +39,14 @@ A switch does its job by following three simple steps:
 1. **Learning:** When a computer plugs into a switch and says "hello," the switch looks at the computer's physical name tag (the MAC address). It writes this name down in its internal notebook so it remembers exactly where that computer is.
 2. **Forwarding:** When a message comes in, the switch checks its notebook. If it knows exactly where the destination computer is, it sends the message *only* down that specific cable.
 3. **Flooding:** If a message comes in for a computer that is *not* in the notebook yet, the switch doesn't know where to send it. So, it sends copies of the message out of every single port (except the one it came from) hoping the right computer will answer.
+
+---
+
+### Switching Methods (How it Forwards Data)
+When a switch receives a message (a frame), it has to decide how fast to send it out. It has three choices:
+1. **Store-and-Forward (The Careful Reader):** The switch reads the *entire* message and checks it for errors before sending it. It is the slowest method, but the safest because broken messages get thrown away.
+2. **Cut-Through (The Speedster):** The switch reads *only* the destination name tag and throws the message down the cable immediately. It is the fastest method, but it might accidentally send broken data.
+3. **Fragment-Free (The Middle Ground):** A compromise between the two. It reads just the first little bit of the message (the first 64 bytes) to make sure there wasn't a major crash, and then sends it on its way.
 
 ---
 
@@ -54,14 +62,6 @@ Imagine taking one giant physical switch and magically slicing it into several s
 This is the network's safety mechanism.
 * **The Problem:** If you connect two switches together with *two* cables (just in case one breaks), the data gets confused and runs in an endless circle. This creates a massive "Broadcast Storm" that will instantly crash the whole network.
 * **The Solution (STP):** Spanning Tree Protocol is a smart safety guard. It detects these endless loops and automatically turns off one of the backup cables. If the main cable ever breaks, STP instantly turns the backup cable back on to save the day!
-
----
-
-### Switching Methods (How it Forwards Data)
-When a switch receives a message (a frame), it has to decide how fast to send it out. It has three choices:
-1. **Store-and-Forward (The Careful Reader):** The switch reads the *entire* message and checks it for errors before sending it. It is the slowest method, but the safest because broken messages get thrown away.
-2. **Cut-Through (The Speedster):** The switch reads *only* the destination name tag and throws the message down the cable immediately. It is the fastest method, but it might accidentally send broken data.
-3. **Fragment-Free (The Middle Ground):** A compromise between the two. It reads just the first little bit of the message (the first 64 bytes) to make sure there wasn't a major crash, and then sends it on its way.
 
 ---
 
