@@ -10,7 +10,6 @@ STP is a safety protocol used by switches. It does not help the switch learn MAC
 
 In a good network, you usually connect switches with extra backup cables just in case one cable breaks. But this creates a physical circle (a loop).
 
-
 If a computer sends a broadcast message (like ARP), the switches will forward it around and around that circle forever. This is called a "broadcast storm," and it will quickly crash the entire network. STP stops this by finding the circle and temporarily turning off (blocking) one of the backup ports.
 
 
