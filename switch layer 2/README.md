@@ -53,7 +53,7 @@ Without a switch, computers would just shout their messages to everyone on the n
 > * **Speed Features:** [PortFast](./stp/speed%20features/PortFast.md)
 > * **Edge-Port Guards:** [BPDU Guard](./stp/protection%20features/edge%20port%20guards/BPDU%20Guard.md) · [BPDU Filter](./stp/protection%20features/edge%20port%20guards/BPDU%20Filter.md)
 > * **Switch-Port Guards:** [Root Guard](./stp/protection%20features/switch%20port%20guard/Root%20Guard.md) · [Loop Guard](./stp/protection%20features/switch%20port%20guard/Loop%20Guard.md)
-> * **Core Concepts:** [VLANs](./stp/core%20concepts/Virtual%20Local%20Area%20Networks%20(VLANs).md) · [EtherChannel](./stp/core%20concepts/EtherChannel.md)
+> * **Core Concepts:** [VLANs](./stp/core%20concepts/Virtual%20Local%20Area%20Networks%20(VLANs).md) · [Trunking](./stp/core%20concepts/Trunking.md) · [EtherChannel](./stp/core%20concepts/EtherChannel.md) 
 
 ---
 
