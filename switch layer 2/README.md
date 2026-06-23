@@ -1,7 +1,3 @@
-Here's your **Fundamentals.md** updated with markdown links pointing to the relevant files in your folder structure. I've kept all your original content intact and only added clickable links where a topic has its own dedicated `.md` file.
-
----
-
 # Switching Fundamentals: A Simple Guide
 
 ### Index
