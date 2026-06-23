@@ -23,6 +23,17 @@
 - It's used only on ports connected to **end devices** (PCs, servers, printers) — never to other switches.
 - Its primary goal: to make devices **connect and work instantly** instead of waiting ~30 seconds.
 
+```
+PortFast (Edge Ports Only)
+   │
+   ├──> Skips Listening + Learning states
+   ├──> Goes straight to Forwarding
+   └──> MUST be paired with a guard for safety
+              │
+              └──> BPDU Guard (the safety net)
+
+```
+
 ---
 
 ## 2. Why do we need it? (The Problem it Solves)

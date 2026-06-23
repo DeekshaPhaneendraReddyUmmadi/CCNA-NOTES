@@ -1,3 +1,7 @@
+Here's your **Fundamentals.md** updated with markdown links pointing to the relevant files in your folder structure. I've kept all your original content intact and only added clickable links where a topic has its own dedicated `.md` file.
+
+---
+
 # Switching Fundamentals: A Simple Guide
 
 ### Index
@@ -17,29 +21,63 @@
 ---
 
 ### What is a Layer 2 Switch?
-A Layer 2 switch is a smart device that connects multiple computers, printers, and phones together in the same building (or local network) so they can talk to each other directly. 
+A Layer 2 switch is a smart device that connects multiple computers, printers, and phones together in the same building (or local network) so they can talk to each other directly.
+
+> 📂 **Deep dive:** See [Responsibilities](./Responsibilities.md) and [Switching Table](./Switching%20Table.md) for what a switch is responsible for and how it tracks devices.
 
 ### What is a Layer 3 Switch?
 A Layer 3 switch is a "two-in-one" super gadget. It combines the local connecting power of a Layer 2 switch with the global routing power of a Router. This means it can connect devices in the same room (using MAC addresses) AND connect entirely different networks together (using IP addresses). It’s like having a local mailroom and a global post office in the exact same box.
 
+> 📂 **Related:** Routing concepts live in the [routing layer 3](../routing%20layer%203/1.%20Introduction.md) folder — see [Static routing](../routing%20layer%203/Static%20routing.md) and [Dynamic Routing](../routing%20layer%203/Dynamic%20Routing.md).
+
 ### Why do we need a Switch?
 Without a switch, computers would just shout their messages to everyone on the network at the exact same time. This causes a huge, slow traffic jam (called a collision). A switch stops the shouting and acts like a smart traffic cop, sending messages privately and directly only to the person who needs to see it.
+```
+                   SPANNING TREE PROTOCOL (STP)
+                    (The loop-prevention boss)
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+   SPEED FEATURES       PROTECTION FEATURES     CORE CONCEPTS
+   (make ports fast)     (keep STP safe)        (VLANs, Trunks,
+        │                     │                  EtherChannel)
+        │                     │
+     PortFast          ┌──────┴──────┐
+                       │             │
+                  EDGE-PORT      SWITCH-PORT
+                  GUARDS         GUARDS
+                       │             │
+              ┌────────┴───┐    ┌────┴────┐
+              │            │    │         │
+         BPDU Guard   BPDU Filter  Root Guard  Loop Guard
+```
+
+> 📂 **Explore the tree above:**
+> * **STP boss:** [Spanning Tree Protocol](./stp/Spanning%20Tree%20Protocol.md)
+> * **Speed Features:** [PortFast](./stp/speed%20features/PortFast.md)
+> * **Edge-Port Guards:** [BPDU Guard](./stp/protection%20features/edge%20port%20guards/BPDU%20Guard.md) · [BPDU Filter](./stp/protection%20features/edge%20port%20guards/BPDU%20Filter.md)
+> * **Switch-Port Guards:** [Root Guard](./stp/protection%20features/switch%20port%20guard/Root%20Guard.md) · [Loop Guard](./stp/protection%20features/switch%20port%20guard/Loop%20Guard.md)
+> * **Core Concepts:** [VLANs](./stp/core%20concepts/Virtual%20Local%20Area%20Networks%20(VLANs).md) · [EtherChannel](./stp/core%20concepts/EtherChannel.md)
 
 ---
 
 ### The Ethernet Frame (The Envelope and Header)
-When a computer sends data, it doesn't just shoot raw information down the cable. It packages the data into a digital envelope called an **Ethernet Frame**. 
-* **The Header:** This is the front of the envelope. The header contains the most important delivery information: the **Destination MAC Address** (where it is going) and the **Source MAC Address** (who sent it). 
+When a computer sends data, it doesn't just shoot raw information down the cable. It packages the data into a digital envelope called an **Ethernet Frame**.
+* **The Header:** This is the front of the envelope. The header contains the most important delivery information: the **Destination MAC Address** (where it is going) and the **Source MAC Address** (who sent it).
 * **Why it matters:** The switch *only* reads the header. It doesn't care about the actual data (the letter inside); it only looks at the header to figure out which port to send the envelope to.
 * **Example:** Just like the post office only reads the mailing address and return address on the outside of your envelope, the switch only reads the MAC addresses in the Ethernet Header.
+
+> 📂 **Full breakdown:** [Headers in Switching](./Headers%20in%20Switching.md)
 
 ---
 
 ### How Does a Switch Work? (MAC Addresses)
-To send messages to the right place, the switch needs to know who is who. 
+To send messages to the right place, the switch needs to know who is who.
 * **The Fingerprint (MAC Address):** Every computer has a permanent, unique physical name tag built right into its network card. This is called a **MAC (Media Access Control) address**. It is 48-bits long and looks like a mix of letters and numbers (e.g., `00:1A:2B:3C:4D:5E`).
 * **The Notebook (CAM Table):** The switch keeps an internal list (called a MAC Address Table or CAM(Content Addressable Memory) Table) where it records which computer (MAC address) is plugged into which physical port (cable hole).
 * **The Delivery:** When a computer sends a message, the switch reads the MAC address on the envelope and sends it *only* to the correct computer.
+
+> 📂 **Full breakdown:** [Switching Table](./Switching%20Table.md)
 
 ---
 
@@ -50,6 +88,8 @@ A switch does its job by following three simple steps:
 2. **Forwarding:** When a message comes in, the switch checks its notebook. If it knows exactly where the destination computer is, it sends the message *only* down that specific cable.
 3. **Flooding:** If a message comes in for a computer that is *not* in the notebook yet, the switch doesn't know where to send it. So, it sends copies of the message out of every single port (except the one it came from) hoping the right computer will answer.
 
+> 📂 **Related:** [Responsibilities](./Responsibilities.md) · [Switching Table](./Switching%20Table.md)
+
 ---
 
 ### Switching Methods (How it Forwards Data)
@@ -58,13 +98,17 @@ When a switch receives a message (a frame), it has to decide how fast to send it
 2. **Cut-Through (The Speedster):** The switch reads *only* the destination name tag and throws the message down the cable immediately. It is the fastest method, but it might accidentally send broken data.
 3. **Fragment-Free (The Middle Ground):** A compromise between the two. It reads just the first little bit of the message (the first 64 bytes) to make sure there wasn't a major crash, and then sends it on its way.
 
+> 📂 **Related:** [Fundamentals](./Fundamentals.md) · [Headers in Switching](./Headers%20in%20Switching.md)
+
 ---
 
 ### VLANs (Virtual Segmentation)
-**VLAN** stands for Virtual Local Area Network. 
-Imagine taking one giant physical switch and magically slicing it into several smaller, separate switches using software. This lets you group devices together (like putting all the HR computers in one group, and all the IT computers in another) even if they are plugged into the exact same physical box. 
+**VLAN** stands for Virtual Local Area Network.
+Imagine taking one giant physical switch and magically slicing it into several smaller, separate switches using software. This lets you group devices together (like putting all the HR computers in one group, and all the IT computers in another) even if they are plugged into the exact same physical box.
 * **Benefits:** It makes the network much more secure and reduces messy traffic jams.
-* **Trunking:** This is a special, heavy-duty cable connection that allows a switch to send traffic for *multiple* different VLANs over a single wire to another switch. 
+* **Trunking:** This is a special, heavy-duty cable connection that allows a switch to send traffic for *multiple* different VLANs over a single wire to another switch.
+
+> 📂 **Full guide:** [Virtual Local Area Networks (VLANs)](./stp/core%20concepts/Virtual%20Local%20Area%20Networks%20(VLANs).md)
 
 ---
 
@@ -73,6 +117,9 @@ This is the network's safety mechanism.
 * **The Problem:** If you connect two switches together with *two* cables (just in case one breaks), the data gets confused and runs in an endless circle. This creates a massive "Broadcast Storm" that will instantly crash the whole network.
 * **The Solution (STP):** Spanning Tree Protocol is a smart safety guard. It detects these endless loops and automatically turns off one of the backup cables. If the main cable ever breaks, STP instantly turns the backup cable back on to save the day!
 
+> 📂 **Full guide:** [Spanning Tree Protocol](./stp/Spanning%20Tree%20Protocol.md)
+> 🛡️ **Protection guards:** [BPDU Guard](./stp/protection%20features/edge%20port%20guards/BPDU%20Guard.md) · [BPDU Filter](./stp/protection%20features/edge%20port%20guards/BPDU%20Filter.md) · [Root Guard](./stp/protection%20features/switch%20port%20guard/Root%20Guard.md) · [Loop Guard](./stp/protection%20features/switch%20port%20guard/Loop%20Guard.md)
+
 ---
 
 ### STP Safety: PortFast
@@ -80,12 +127,17 @@ This is the network's safety mechanism.
 * **Why it matters:** Normal computers and printers do not cause network loops. It is annoying to wait 30 seconds for your computer to connect to the internet every time you plug it in. PortFast turns the port on instantly. *(Note: Never use PortFast on a port connected to another switch!)*
 * **Example:** PortFast is like a VIP fast-pass lane at a theme park. Because you are a regular person (a computer) and not a heavy-duty truck (a switch), security lets you bypass the 30-second inspection line and go straight inside.
 
+> 📂 **Full guide:** [PortFast](./stp/speed%20features/PortFast.md)
+> 🛡️ **Pair it safely with:** [BPDU Guard](./stp/protection%20features/edge%20port%20guards/BPDU%20Guard.md)
+
 ---
 
 ### EtherChannel (Bundling Cables)
 * **What it is:** A technology that allows you to take multiple physical cables (up to 8) connecting two switches and bundle them together in software so they act like one single, massive cable.
 * **Why it matters:** It provides **speed** (two 1-Gigabit cables bundled together give you a 2-Gigabit connection) and **redundancy** (if one cable in the bundle gets unplugged, the traffic instantly moves to the other cables without STP having to recalculate anything).
 * **Example:** Imagine two towns connected by a 1-lane dirt road. Traffic is terrible. EtherChannel is like paving three more lanes right next to it, turning it into a 4-lane superhighway. If one lane is closed for construction, cars can still use the other three lanes without stopping.
+
+> 📂 **Full guide:** [EtherChannel](./stp/core%20concepts/EtherChannel.md)
 
 ---
 
@@ -124,4 +176,26 @@ This is the network's safety mechanism.
 
 **EtherChannel Commands:**
 * `channel-group [number] mode active` : Bundles the selected physical ports into an EtherChannel using the LACP protocol.
-* `show etherchannel summary` : The best command to verify if your bundled cables are up and working together properly.  
+* `show etherchannel summary` : The best command to verify if your bundled cables are up and working together properly.
+
+---
+
+### 📚 Full Topic Map (Quick Links)
+
+| Area | File |
+|---|---|
+| **Switch basics** | [Fundamentals](./Fundamentals.md) · [Responsibilities](./Responsibilities.md) · [Switching Table](./Switching%20Table.md) · [Headers in Switching](./Headers%20in%20Switching.md) |
+| **Core concepts** | [VLANs](./stp/core%20concepts/Virtual%20Local%20Area%20Networks%20(VLANs).md) · [EtherChannel](./stp/core%20concepts/EtherChannel.md) |
+| **STP core** | [Spanning Tree Protocol](./stp/Spanning%20Tree%20Protocol.md) |
+| **Speed features** | [PortFast](./stp/speed%20features/PortFast.md) |
+| **Edge-port guards** | [BPDU Guard](./stp/protection%20features/edge%20port%20guards/BPDU%20Guard.md) · [BPDU Filter](./stp/protection%20features/edge%20port%20guards/BPDU%20Filter.md) |
+| **Switch-port guards** | [Root Guard](./stp/protection%20features/switch%20port%20guard/Root%20Guard.md) · [Loop Guard](./stp/protection%20features/switch%20port%20guard/Loop%20Guard.md) |
+| **Routing (Layer 3)** | [Introduction](../routing%20layer%203/1.%20Introduction.md) · [Static routing](../routing%20layer%203/Static%20routing.md) · [Dynamic Routing](../routing%20layer%203/Dynamic%20Routing.md) |
+| **Extras** | [Protocols](../Good%20to%20know/protocols.md) · [Network Fundamentals](../network-fundamentals.md) |
+
+---
+
+**A few notes on the links:**
+- I used **relative paths** (e.g., `./stp/...`) so they work no matter where you clone the repo.
+- Spaces and parentheses in filenames are **URL-encoded** (`%20` for space, `%28`/`%29` aren't needed for parentheses on most renderers, but spaces are). On GitHub these render fine.
+- The folder `switch port guard` is **singular** in your tree, so I kept it that way in the paths — double-check that matches exactly, or the links will break.
