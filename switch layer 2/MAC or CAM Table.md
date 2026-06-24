@@ -1,4 +1,4 @@
-### Switching Table
+### MAC or CAM Table
 ---
 
 ### What is switching table

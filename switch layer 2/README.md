@@ -9,8 +9,11 @@
 * [The Three Basic Rules of a Switch](#the-three-basic-rules-of-a-switch)
 * [Switching Methods (How it Forwards Data)](#switching-methods-how-it-forwards-data)
 * [VLANs (Virtual Segmentation)](#vlans-virtual-segmentation)
+* [Trunking (Carrying Many VLANs)](#trunking-carrying-many-vlans)
 * [Spanning Tree Protocol (STP)](#spanning-tree-protocol-stp)
 * [STP Safety: PortFast](#stp-safety-portfast)
+* [Edge-Port Guards (Protecting User Ports)](#edge-port-guards-protecting-user-ports)
+* [Switch-Port Guards (Protecting Switch Links)](#switch-port-guards-protecting-switch-links)
 * [EtherChannel (Bundling Cables)](#etherchannel-bundling-cables)
 * [Comprehensive Switching Commands](#comprehensive-switching-commands)
 
@@ -19,7 +22,7 @@
 ### What is a Layer 2 Switch?
 A Layer 2 switch is a smart device that connects multiple computers, printers, and phones together in the same building (or local network) so they can talk to each other directly.
 
-> 📂 **Deep dive:** See [Responsibilities](./Responsibilities.md) and [Switching Table](./Switching%20Table.md) for what a switch is responsible for and how it tracks devices.
+> 📂 **Deep dive:** See [Responsibilities](./Responsibilities.md) and [MAC or CAM Table](./MAC%20or%20CAM%20Table.md) for what a switch is responsible for and how it tracks devices.
 
 ### What is a Layer 3 Switch?
 A Layer 3 switch is a "two-in-one" super gadget. It combines the local connecting power of a Layer 2 switch with the global routing power of a Router. This means it can connect devices in the same room (using MAC addresses) AND connect entirely different networks together (using IP addresses). It’s like having a local mailroom and a global post office in the exact same box.
@@ -38,13 +41,13 @@ Without a switch, computers would just shout their messages to everyone on the n
    (make ports fast)     (keep STP safe)        (VLANs, Trunks,
         │                     │                  EtherChannel)
         │                     │
-     PortFast          ┌──────┴──────┐
-                       │             │
-                  EDGE-PORT      SWITCH-PORT
-                  GUARDS         GUARDS
-                       │             │
-              ┌────────┴───┐    ┌────┴────┐
-              │            │    │         │
+     PortFast          ┌──────┴────────────┐
+                       │                   │
+                  EDGE-PORT           SWITCH-PORT
+                  GUARDS              GUARDS
+                       │                   │
+              ┌────────┴───┐           ┌───┴─────────┐
+              │            │           │             │
          BPDU Guard   BPDU Filter  Root Guard  Loop Guard
 ```
 
@@ -53,7 +56,7 @@ Without a switch, computers would just shout their messages to everyone on the n
 > * **Speed Features:** [PortFast](./stp/speed%20features/PortFast.md)
 > * **Edge-Port Guards:** [BPDU Guard](./stp/protection%20features/edge%20port%20guards/BPDU%20Guard.md) · [BPDU Filter](./stp/protection%20features/edge%20port%20guards/BPDU%20Filter.md)
 > * **Switch-Port Guards:** [Root Guard](./stp/protection%20features/switch%20port%20guard/Root%20Guard.md) · [Loop Guard](./stp/protection%20features/switch%20port%20guard/Loop%20Guard.md)
-> * **Core Concepts:** [VLANs](./stp/core%20concepts/Virtual%20Local%20Area%20Networks%20(VLANs).md) · [Trunking](./stp/core%20concepts/Trunking.md) · [EtherChannel](./stp/core%20concepts/EtherChannel.md) 
+> * **Core Concepts:** [VLANs](./stp/core%20concepts/Virtual%20Local%20Area%20Networks%20(VLANs).md) · [Trunking](./stp/core%20concepts/Trunking.md) · [EtherChannel](./stp/core%20concepts/EtherChannel.md)
 
 ---
 
@@ -63,7 +66,7 @@ When a computer sends data, it doesn't just shoot raw information down the cable
 * **Why it matters:** The switch *only* reads the header. It doesn't care about the actual data (the letter inside); it only looks at the header to figure out which port to send the envelope to.
 * **Example:** Just like the post office only reads the mailing address and return address on the outside of your envelope, the switch only reads the MAC addresses in the Ethernet Header.
 
-> 📂 **Full breakdown:** [Headers in Switching](./Headers%20in%20Switching.md)
+> 📂 **Full breakdown:** [Headers or the Ethernet Frame](./Headers%20or%20the%20Ethernet%20Frame.md)
 
 ---
 
@@ -73,7 +76,7 @@ To send messages to the right place, the switch needs to know who is who.
 * **The Notebook (CAM Table):** The switch keeps an internal list (called a MAC Address Table or CAM(Content Addressable Memory) Table) where it records which computer (MAC address) is plugged into which physical port (cable hole).
 * **The Delivery:** When a computer sends a message, the switch reads the MAC address on the envelope and sends it *only* to the correct computer.
 
-> 📂 **Full breakdown:** [Switching Table](./Switching%20Table.md)
+> 📂 **Full breakdown:** [MAC or CAM Table](./MAC%20or%20CAM%20Table.md)
 
 ---
 
@@ -84,7 +87,7 @@ A switch does its job by following three simple steps:
 2. **Forwarding:** When a message comes in, the switch checks its notebook. If it knows exactly where the destination computer is, it sends the message *only* down that specific cable.
 3. **Flooding:** If a message comes in for a computer that is *not* in the notebook yet, the switch doesn't know where to send it. So, it sends copies of the message out of every single port (except the one it came from) hoping the right computer will answer.
 
-> 📂 **Related:** [Responsibilities](./Responsibilities.md) · [Switching Table](./Switching%20Table.md)
+> 📂 **Related:** [Responsibilities](./Responsibilities.md) · [MAC or CAM Table](./MAC%20or%20CAM%20Table.md)
 
 ---
 
@@ -94,7 +97,7 @@ When a switch receives a message (a frame), it has to decide how fast to send it
 2. **Cut-Through (The Speedster):** The switch reads *only* the destination name tag and throws the message down the cable immediately. It is the fastest method, but it might accidentally send broken data.
 3. **Fragment-Free (The Middle Ground):** A compromise between the two. It reads just the first little bit of the message (the first 64 bytes) to make sure there wasn't a major crash, and then sends it on its way.
 
-> 📂 **Related:** [Fundamentals](./Fundamentals.md) · [Headers in Switching](./Headers%20in%20Switching.md)
+> 📂 **Related:** [Headers or the Ethernet Frame](./Headers%20or%20the%20Ethernet%20Frame.md)
 
 ---
 
@@ -105,6 +108,15 @@ Imagine taking one giant physical switch and magically slicing it into several s
 * **Trunking:** This is a special, heavy-duty cable connection that allows a switch to send traffic for *multiple* different VLANs over a single wire to another switch.
 
 > 📂 **Full guide:** [Virtual Local Area Networks (VLANs)](./stp/core%20concepts/Virtual%20Local%20Area%20Networks%20(VLANs).md)
+
+---
+
+### Trunking (Carrying Many VLANs)
+* **What it is:** A trunk is a single cable that carries **many VLANs at once** between switches, adding a small **tag (802.1Q)** to each frame so the other side knows which VLAN it belongs to.
+* **Why it matters:** Without trunks, you'd need **one cable per VLAN** — a wasteful, unscalable mess. Trunks let one link do the job of many.
+* **Example:** Like a **multi-floor service elevator** — instead of one elevator per floor, a single elevator carries everyone, and each person's **floor badge (tag)** ensures they get off at the right level.
+
+> 📂 **Full guide:** [Trunking](./stp/core%20concepts/Trunking.md)
 
 ---
 
@@ -125,6 +137,51 @@ This is the network's safety mechanism.
 
 > 📂 **Full guide:** [PortFast](./stp/speed%20features/PortFast.md)
 > 🛡️ **Pair it safely with:** [BPDU Guard](./stp/protection%20features/edge%20port%20guards/BPDU%20Guard.md)
+
+---
+
+### Edge-Port Guards (Protecting User Ports)
+**Edge-port guards** protect the ports that face **end devices** (PCs, printers, phones) — the ports where PortFast is usually enabled. Since these ports skip the normal loop checks for speed, these guards make that speed **safe**.
+
+* **BPDU Guard — The Bouncer:**
+  * **What it does:** If a PortFast port ever receives a BPDU (a Spanning Tree "hello" from a switch), it means someone plugged a **switch where a PC should be**. BPDU Guard instantly **shuts the port down** (err-disabled).
+  * **Why it matters:** It stops accidental or malicious loops before they can crash the network.
+  * **Example:** Like a **fast-pass that self-destructs** the moment the holder tries to sneak in something forbidden.
+
+* **BPDU Filter — The Mute Button:**
+  * **What it does:** **Suppresses or ignores** BPDUs on edge ports instead of shutting them down. Has a *safe* global mode and a *risky* interface mode.
+  * **Why it matters:** Useful for reducing Spanning Tree "chatter," but the risky mode can **hide loops** — so use with care.
+  * **Example:** Like **putting tape over a doorbell** — handy for quiet, but you might miss a real visitor.
+
+> 📂 **Full guides:** [BPDU Guard](./stp/protection%20features/edge%20port%20guards/BPDU%20Guard.md) · [BPDU Filter](./stp/protection%20features/edge%20port%20guards/BPDU%20Filter.md)
+> ✅ **Rule of thumb:** Edge ports face **PCs** → protect with **BPDU Guard** (and PortFast).
+
+---
+
+### Switch-Port Guards (Protecting Switch Links)
+**Switch-port guards** protect the links that face **other switches**. They keep the Spanning Tree topology stable and prevent loops on the backbone — and unlike BPDU Guard, they **self-recover** automatically.
+
+* **Root Guard — The Bodyguard for the Boss:**
+  * **What it does:** Stops a rogue or misconfigured switch from **stealing the root bridge role**. If a port hears a "superior BPDU" (someone claiming to be a better boss), it **blocks** that port (root-inconsistent) until the claim stops.
+  * **Why it matters:** Keeps the root bridge exactly where the network designer intended, so traffic flows on the best paths.
+  * **Example:** Like a **rule that the CEO must stay at HQ** — if a branch tries to declare itself the new headquarters, Root Guard blocks the takeover.
+
+* **Loop Guard — The Silence Detector:**
+  * **What it does:** Watches for BPDUs that **suddenly stop arriving** on a blocked/root port. Instead of assuming "all clear" and forwarding (which could open a loop), it keeps the port **safely blocked** (loop-inconsistent).
+  * **Why it matters:** Catches sneaky **one-way link failures** that other checks miss.
+  * **Example:** Like a **night guard who must radio in every minute** — if the radio goes silent, the vault **stays locked** just to be safe.
+
+> 📂 **Full guides:** [Root Guard](./stp/protection%20features/switch%20port%20guard/Root%20Guard.md) · [Loop Guard](./stp/protection%20features/switch%20port%20guard/Loop%20Guard.md)
+> ✅ **Rule of thumb:** Switch-facing ports → protect with **Root Guard** and **Loop Guard**.
+
+**Quick comparison of all four guards:**
+
+| Guard | Port Type | Trigger | Action | Recovery |
+|-------|-----------|---------|--------|----------|
+| **BPDU Guard** | Edge (to PCs) | Any BPDU received | Err-disable (shutdown) | Manual / timer |
+| **BPDU Filter** | Edge (to PCs) | BPDUs present | Ignore / suppress | N/A |
+| **Root Guard** | Switch links | Superior BPDU | Block (root-inconsistent) | Automatic |
+| **Loop Guard** | Switch links | Missing BPDU | Block (loop-inconsistent) | Automatic |
 
 ---
 
@@ -154,6 +211,8 @@ This is the network's safety mechanism.
 **Trunking Commands:**
 * `switchport mode trunk` : Forces the port to become a Trunk (carries multiple VLANs to another switch).
 * `switchport trunk allowed vlan [list]` : Secures the trunk by only allowing specific VLANs to cross it (e.g., `switchport trunk allowed vlan 10,20`).
+* `switchport trunk native vlan [id]` : Sets the untagged (native) VLAN — best practice is an unused VLAN.
+* `switchport nonegotiate` : Disables DTP to prevent VLAN-hopping attacks.
 * `show interfaces trunk` : Verifies which ports are currently acting as trunks.
 
 **Layer 3 Switching Commands:**
@@ -170,6 +229,17 @@ This is the network's safety mechanism.
 * `spanning-tree portfast` : Enables instant-on VIP access for a single specific port.
 * `spanning-tree portfast default` : Turns on PortFast for *all* access ports on the switch globally.
 
+**Edge-Port Guard Commands:**
+* `spanning-tree bpduguard enable` : Turns on BPDU Guard for a port (shuts it down if a BPDU arrives).
+* `spanning-tree portfast bpduguard default` : Globally enables BPDU Guard on all PortFast ports (best practice).
+* `spanning-tree bpdufilter enable` : Enables BPDU Filter on a port (use with caution).
+
+**Switch-Port Guard Commands:**
+* `spanning-tree guard root` : Enables Root Guard on a port facing another switch.
+* `spanning-tree guard loop` : Enables Loop Guard on a root/alternate port.
+* `spanning-tree loopguard default` : Globally enables Loop Guard on all eligible point-to-point ports.
+* `show spanning-tree inconsistentports` : Lists ports blocked by Root Guard or Loop Guard.
+
 **EtherChannel Commands:**
 * `channel-group [number] mode active` : Bundles the selected physical ports into an EtherChannel using the LACP protocol.
 * `show etherchannel summary` : The best command to verify if your bundled cables are up and working together properly.
@@ -180,18 +250,11 @@ This is the network's safety mechanism.
 
 | Area | File |
 |---|---|
-| **Switch basics** | [Fundamentals](./Fundamentals.md) · [Responsibilities](./Responsibilities.md) · [Switching Table](./Switching%20Table.md) · [Headers in Switching](./Headers%20in%20Switching.md) |
-| **Core concepts** | [VLANs](./stp/core%20concepts/Virtual%20Local%20Area%20Networks%20(VLANs).md) · [EtherChannel](./stp/core%20concepts/EtherChannel.md) |
+| **Switch basics** | [Fundamentals](./Fundamentals.md) · [Responsibilities](./Responsibilities.md) · [MAC or CAM Table](./MAC%20or%20CAM%20Table.md) · [Headers or the Ethernet Frame](./Headers%20or%20the%20Ethernet%20Frame.md) |
+| **Core concepts** | [VLANs](./stp/core%20concepts/Virtual%20Local%20Area%20Networks%20(VLANs).md) · [Trunking](./stp/core%20concepts/Trunking.md) · [EtherChannel](./stp/core%20concepts/EtherChannel.md) |
 | **STP core** | [Spanning Tree Protocol](./stp/Spanning%20Tree%20Protocol.md) |
 | **Speed features** | [PortFast](./stp/speed%20features/PortFast.md) |
 | **Edge-port guards** | [BPDU Guard](./stp/protection%20features/edge%20port%20guards/BPDU%20Guard.md) · [BPDU Filter](./stp/protection%20features/edge%20port%20guards/BPDU%20Filter.md) |
 | **Switch-port guards** | [Root Guard](./stp/protection%20features/switch%20port%20guard/Root%20Guard.md) · [Loop Guard](./stp/protection%20features/switch%20port%20guard/Loop%20Guard.md) |
 | **Routing (Layer 3)** | [Introduction](../routing%20layer%203/1.%20Introduction.md) · [Static routing](../routing%20layer%203/Static%20routing.md) · [Dynamic Routing](../routing%20layer%203/Dynamic%20Routing.md) |
 | **Extras** | [Protocols](../Good%20to%20know/protocols.md) · [Network Fundamentals](../network-fundamentals.md) |
-
----
-
-**A few notes on the links:**
-- I used **relative paths** (e.g., `./stp/...`) so they work no matter where you clone the repo.
-- Spaces and parentheses in filenames are **URL-encoded** (`%20` for space, `%28`/`%29` aren't needed for parentheses on most renderers, but spaces are). On GitHub these render fine.
-- The folder `switch port guard` is **singular** in your tree, so I kept it that way in the paths — double-check that matches exactly, or the links will break.

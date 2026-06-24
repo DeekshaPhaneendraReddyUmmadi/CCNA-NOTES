@@ -1,7 +1,3 @@
-Here is your complete guide. I have seamlessly integrated the **ASCII Art** and the missing frame components (**Preamble** and **Payload**) into your exact structure, and updated all the numbers and index links so everything flows perfectly!
-
----
-
 # Headers in Switching
 
 ### Index
