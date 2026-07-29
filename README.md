@@ -1,4 +1,13 @@
-This Knowledge Base is divided into three main pillars: Reference Guides, Layer 2 Switching, and Layer 3 Routing.
+# `README.md` (Root Directory)
+
+> **Scope:** The ultimate, expert-level master reference guide for building, securing, and troubleshooting a Cisco Enterprise Campus Network.
+> **Design:** Collapsed-Core topology featuring `CORE-SW1/2`, `ACC-SW1-4`, dynamic routing, network services, and comprehensive defense-in-depth security.
+
+---
+
+## 📂 Directory Structure & Clickable Index
+
+This Knowledge Base is divided into five main pillars: Reference Guides, Layer 2 Switching, Layer 3 Routing, Network Services, and Security.
 
 ### 🔹 [Reference Guides](./reference-guides/)
 | File | Topic |
@@ -67,11 +76,33 @@ This Knowledge Base is divided into three main pillars: Reference Guides, Layer 
 | [BGP](./layer-3-routing/dynamic-protocols/bgp.md) | Path-Vector, ASNs, and Internet Routing. |
 | [RIP](./layer-3-routing/dynamic-protocols/rip.md) | Hop-count, Split Horizon, and Route Poisoning. |
 
+### 🔹 [Network Services](./network-services/)
+*Essential infrastructure protocols that provide endpoint connectivity and redundancy.*
+
+| File | Topic |
+|------|-------|
+| [DHCP Operations](./network-services/dhcp.md) | The DORA process, IP pools, and Option 150. |
+| [HSRP & VRRP](./network-services/hsrp-vrrp.md) | First Hop Redundancy, Virtual IPs, and Failover. |
+| [NAT & PAT](./network-services/nat.md) | Inside/Outside translation and Port Overload. |
+| [NTP](./network-services/ntp.md) | Stratum levels, clock synchronization, and logging. |
+
+### 🔹 [Security](./security/)
+*Defense-in-depth mechanisms protecting the data, control, and management planes.*
+
+| File | Topic |
+|------|-------|
+| [Access Control Lists (ACLs)](./security/acls.md) | Standard/Extended filtering and Top-Down logic. |
+| [Port Security](./security/port-security.md) | MAC address restriction, Sticky learning, and Violations. |
+| [AAA Framework](./security/aaa.md) | RADIUS/TACACS+, Identity, and Role-Based Access. |
+| [DHCP Snooping & DAI](./security/dhcp-snooping-dai.md) | Mitigating rogue servers and Man-in-the-Middle ARP attacks. |
+
 ---
 
 ## 🎯 How to Use This Knowledge Base
 
-1. **Start at the Root:** Read the `reference-guides` to familiarize yourself with the protocols and commands.
+1. **Start at the Root:** Read the `reference-guides` to familiarize yourself with the protocols and CLI commands.
 2. **Build the Foundation:** Read through `layer-2-switching` sequentially. Do not skip the STP Guards; they are critical for lab stability.
 3. **Connect the Networks:** Move to `layer-3-routing` to understand how your isolated VLANs communicate.
-4. **Execute the Lab:** Open `layer-2-switching/ultimate-l2-lab/lab-tasks.md` and build the network in Packet Tracer. Use the `troubleshooting-guide.md` when things break.
+4. **Enable Services:** Use `network-services` to deploy DHCP for your endpoints, NAT for internet access, and HSRP for gateway redundancy.
+5. **Lock it Down:** Apply the concepts in `security` to protect your edge ports and management planes.
+6. **Execute the Lab:** Open `layer-2-switching/ultimate-l2-lab/lab-tasks.md` and build the network in Packet Tracer. Use the `troubleshooting-guide.md` when things break.
